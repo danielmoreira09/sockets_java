@@ -19,10 +19,34 @@ import java.util.logging.Logger;
  * @author daniel
  */
 public class ClientUDP {
-     public static void main(String[] args) throws UnknownHostException, IOException{
+    public static void main(String[] args) throws UnknownHostException, IOException{
         //calculando tempo
         long tempoInicial = System.currentTimeMillis();
-         
+        
+        try{
+            int port = 12345;
+            DatagramSocket socket = new DatagramSocket();
+            //byte[] sendBuf = new byte[1024];
+            DatagramPacket packet;
+            String host = "255.255.255.255";
+
+            byte[] buf = new byte[1024];
+            InetAddress address = InetAddress.getByName(host);
+            packet = new DatagramPacket(buf, buf.length, address, port);
+            socket.send(packet);
+
+            //recebendo resposta do servidor
+            packet = new DatagramPacket(buf, buf.length);
+            socket.receive(packet);
+            String msg = new String(packet.getData(), 0, packet.getLength());
+            System.out.println("Mensagem recebida do servidor-->"+ msg + "<---");
+
+            long tempoFinal = System.currentTimeMillis();
+            System.out.printf("%.9f ms", (double)(tempoFinal - tempoInicial) / 1000L);
+        }catch(IOException e){
+            System.out.println("Erro: "+e.getMessage());
+        }
+        /*
         String msg = new String();
         msg = "solicitar ip server";
         byte[] data = msg.getBytes();
@@ -50,6 +74,6 @@ public class ClientUDP {
         } catch (SocketException ex) {
             Logger.getLogger(ClientUDP.class.getName()).log(Level.SEVERE, null, ex);
         }
-         
+        */
      }
 }

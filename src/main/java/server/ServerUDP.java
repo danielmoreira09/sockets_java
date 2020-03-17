@@ -8,6 +8,7 @@ package server;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,20 +18,32 @@ import java.util.logging.Logger;
  * @author daniel
  */
 public class ServerUDP {
-     public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException{
          
-         try{
+        try{
              
             DatagramSocket server = new DatagramSocket(12345);
-            byte[] receptor = new byte[1024];
-            DatagramPacket bufferRecebimento = new DatagramPacket(receptor, receptor.length);
-            server.receive(bufferRecebimento);
             
-            String msg = new String(bufferRecebimento.getData());
-            System.out.println(msg);
+            byte[] buf = new byte[256];
+            DatagramPacket packet = new DatagramPacket(buf, buf.length);
+            server.receive(packet);
+            
+            String msg = "Enviando mensagem do ServidorUDP para ClienteUDP...";
+            buf = msg.getBytes();
              
-            DatagramPacket bufferEnvio = new DatagramPacket(receptor, receptor.length, bufferRecebimento.getAddress(),bufferRecebimento.getPort());
-            server.send(bufferEnvio);
+            //Enviando a mensagem 
+            InetAddress address = packet.getAddress();
+            int port = packet.getPort();
+            packet = new DatagramPacket(buf,buf.length, address, port);
+            server.send(packet);
+            System.out.println("------------------------");
+            System.out.println("Address: " + packet.getAddress());
+            System.out.println("Porta: " + packet.getPort());
+            System.out.println("Mensagem: " +msg + "<---");
+            System.out.println("Enviando pacote....");
+            System.out.println("------------------------");
+            
+            
             server.close();
             
          } catch (SocketException ex) {
