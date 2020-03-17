@@ -37,27 +37,6 @@ public class ServerTCP {
         }catch(IOException e){
             System.out.println("Erro: "+ e.getMessage());
         }
-        /*
-        //recebendo
-        Socket conexao = servidor.accept();
-        System.out.println("Nova conexão com o cliente: "+conexao.getInetAddress().getHostAddress());
         
-        Scanner s = new Scanner(conexao.getInputStream());
-        while(s.hasNextLine())
-            System.out.println(s.nextLine());
-        
-        InputStream is = conexao.getInputStream();
-        System.out.println("Recebido do Cliente: "+(char) is.read());
-        
-        
-        //enviando
-        OutputStream enviaAoCliente = conexao.getOutputStream();
-        DataOutputStream dos = new DataOutputStream(enviaAoCliente);
-        dos.write(66);
-        //dos.write(66);
-        
-        servidor.close();
-        clientSocket.close();        
-        */
     }
 }
