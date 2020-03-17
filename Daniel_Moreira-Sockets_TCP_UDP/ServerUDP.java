@@ -37,10 +37,23 @@ public class ServerUDP {
             packet = new DatagramPacket(buf,buf.length, address, port);
             server.send(packet);
             
+            /* 
+            // Apenas como curiosidade
+            System.out.println("------------------------");
+            System.out.println("Address: " + packet.getAddress());
+            System.out.println("Porta: " + packet.getPort());
+            System.out.println("Mensagem: " +msg + "<---");
+            System.out.println("Enviando pacote....");
+            System.out.println("------------------------");
+            */
+            
             server.close();
             
          } catch (SocketException ex) {
              Logger.getLogger(ServerUDP.class.getName()).log(Level.SEVERE, null, ex);
          }
+         
+         
+         
      }
 }
