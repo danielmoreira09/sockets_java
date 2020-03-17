@@ -5,10 +5,13 @@
  */
 package client;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -19,31 +22,23 @@ import java.net.Socket;
 public class ClientTCP {
     public static void main(String[] args){
     
-        //calculando tempo
+        // Tempo Inicial
         long tempoInicial = System.currentTimeMillis();
 
         try {
             Socket client = new Socket("127.0.0.1", 12345);
+            PrintWriter out = new PrintWriter(client.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             
-            //enviando
-            OutputStream enviaAoServidor = client.getOutputStream();
-            DataOutputStream dos = new DataOutputStream(enviaAoServidor);
-            //dos.write(65);
-            dos.writeBytes("Enviando Mensagem");
-            
-            //recebendo
-            InputStream is = client.getInputStream();
-            System.out.println("Recebendo do Servidor: "+(char)is.read());
-            //System.out.println("Recebendo do Servidor: "+(char)is.read());
+            out.println("Enviando mensagem do Cliente para o Servidor...");
+            System.out.println("Mensagem recebida do Servidor --> " + in.readLine() +" <--");
             
             client.close();
-            
             long tempoFinal = System.currentTimeMillis();
             System.out.printf("%.9f ms", (double)(tempoFinal - tempoInicial) / 1000L);
-        
             
         }catch(Exception e){
-
+            System.out.println("Erro: "+e.getMessage());
         }
     }
 }

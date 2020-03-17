@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class ServerUDP {
      public static void main(String[] args) throws IOException{
          
-         try {
+         try{
              
             DatagramSocket server = new DatagramSocket(12345);
             byte[] receptor = new byte[1024];

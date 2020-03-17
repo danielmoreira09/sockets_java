@@ -41,6 +41,7 @@ public class ClientUDP {
             
             String ipServidor = recebendo.getAddress().toString();
             System.out.println("ipServidor: "+ipServidor);
+            System.out.println("Mensagem: "+ receive.toString());
             client.close();
         
             long tempoFinal = System.currentTimeMillis();
